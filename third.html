@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecossistema de Afeto - Comunidade e Natureza</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'terra-dark': '#3E2723',
+                        'terra-light': '#8D6E63',
+                        'natureza-dark': '#1B5E20',
+                        'natureza-light': '#4CAF50',
+                        'sol-ocre': '#FFB300',
+                        'papel': '#F5F5DC',
+                        'papel-escuro': '#E8E4C9'
+                    },
+                    fontFamily: {
+                        'serif': ['Merriweather', 'serif'],
+                        'sans': ['Ubuntu', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&family=Ubuntu:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            background-color: #F5F5DC;
+            /* Trava o scroll inicialmente para a intro */
+            overflow: hidden;
+        }
+
+        /* Máscara Orgânica para o Vídeo da Hero Section */
+        .organic-mask {
+            mask-image: url(#blob-mask);
+            -webkit-mask-image: url(#blob-mask);
+            mask-size: contain;
+            -webkit-mask-size: contain;
+            mask-repeat: no-repeat;
+            -webkit-mask-repeat: no-repeat;
+            mask-position: center;
+            -webkit-mask-position: center;
+            transition: transform 0.5s ease-out;
+        }
+
+        .organic-mask:hover {
+            transform: scale(1.05);
+        }
+
+        /* Utilitários */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .scrapbook-card {
+            box-shadow: 10px 10px 0px rgba(62, 39, 35, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .scrapbook-card:hover {
+            transform: translateY(-5px) rotate(1deg);
+        }
+
+        .tape {
+            background-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(2px);
+        }
+
+        /* Ajuste fino para vídeo mobile */
+        video {
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-terra-dark selection:bg-natureza-light selection:text-white">
+
+    <div id="intro-overlay"
+        class="fixed inset-0 z-[100] bg-black flex items-end justify-center pb-20 cursor-pointer transition-opacity duration-1000">
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-90">
+            <source src="floresta.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo.
+        </video>
+
+        <div class="absolute inset-0 bg-black/30"></div>
+
+        <div class="relative z-10 text-center text-papel animate-pulse drop-shadow-lg select-none">
+            <p class="text-lg font-serif tracking-[0.2em] uppercase mb-2 text-shadow">Role para iniciar a jornada</p>
+            <span class="text-3xl block">↓</span>
+        </div>
+    </div>
+
+    <svg width="0" height="0" class="absolute">
+        <defs>
+            <mask id="blob-mask">
+                <path
+                    d="M45.7,-76.3C58.9,-69.3,69.1,-55.5,76.3,-41.2C83.5,-26.9,87.6,-12.2,85.2,1.4C82.8,15,73.8,27.5,64.2,38.6C54.6,49.7,44.3,59.3,32.7,65.8C21.1,72.3,8.2,75.7,-3.6,82C-15.4,88.2,-26.1,97.3,-35.6,92.5C-45.1,87.7,-53.4,69,-61.8,55.1C-70.2,41.2,-78.7,32.1,-82.1,21.2C-85.5,10.3,-83.8,-2.4,-78.3,-13.6C-72.8,-24.8,-63.5,-34.5,-53.1,-42.6C-42.7,-50.7,-31.2,-57.2,-19.6,-61.6C-8,-66,3.7,-68.3,16.5,-73.4C29.3,-78.5,43.2,-86.3,45.7,-76.3Z"
+                    transform="translate(100 100) scale(1.1)" fill="white" />
+            </mask>
+        </defs>
+    </svg>
+
+    <nav class="fixed w-full z-40 px-6 py-4 flex justify-between items-center transition-all duration-300 navbar-hidden opacity-0"
+        id="navbar">
+        <div class="text-2xl font-serif font-bold text-natureza-dark flex items-center gap-2">
+            <span class="text-3xl text-sol-ocre">❋</span> Rizoma
+        </div>
+        <div class="hidden md:flex gap-8 text-terra-dark font-medium">
+            <a href="#inicio" class="hover:text-natureza-dark transition-colors">O Início</a>
+            <a href="#comunidade" class="hover:text-natureza-dark transition-colors">A Comunidade</a>
+            <a href="#projetos" class="hover:text-natureza-dark transition-colors">Projetos</a>
+        </div>
+        <button
+            class="bg-natureza-dark text-white px-6 py-2 rounded-full font-serif italic hover:bg-natureza-light hover:scale-105 transition-all duration-300 shadow-lg">
+            Junte-se a nós
+        </button>
+    </nav>
+
+    <header id="inicio" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+
+        <div class="absolute top-1/4 left-10 w-24 h-24 opacity-20 leaf-float">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="text-natureza-dark">
+                <path d="M17,8C8,10,5.9,16.17,3.82,21.34L5.71,22l1-2.3A4.49,4.49,0,0,0,8,20C19,20,22,3,22,3Z" />
+            </svg>
+        </div>
+        <div class="absolute bottom-10 right-10 w-32 h-32 opacity-20 leaf-float" style="animation-delay: 1s;">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="text-sol-ocre">
+                <path
+                    d="M12,2L9.19,8.63L2,9.19L7.27,14.37L6,21.5L12,18.33L18,21.5L16.73,14.37L22,9.19L14.81,8.63L12,2Z" />
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="z-10 order-2 md:order-1 hero-text opacity-0">
+                <span class="text-sol-ocre font-bold tracking-widest uppercase text-sm mb-4 block">Ecossistema
+                    Digital</span>
+                <h1 class="text-5xl md:text-7xl font-serif font-bold text-terra-dark leading-tight mb-6">
+                    Cultivando <br>
+                    <span class="text-natureza-dark italic">Laços</span>, <br>
+                    Preservando Vidas.
+                </h1>
+                <p class="text-lg md:text-xl text-terra-light mb-8 font-sans max-w-md leading-relaxed">
+                    Um espaço onde a tecnologia se encontra com a sabedoria ancestral. Navegue pelas nossas raízes e
+                    descubra como o afeto transforma territórios.
+                </p>
+                <div class="flex gap-4">
+                    <button
+                        class="group relative px-8 py-3 bg-terra-dark text-papel rounded-lg overflow-hidden transition-all hover:shadow-xl">
+                        <span class="relative z-10 font-serif">Plantar uma semente</span>
+                        <div
+                            class="absolute inset-0 bg-natureza-dark transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300">
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative order-1 md:order-2 flex justify-center hero-video opacity-0">
+                <div
+                    class="w-[400px] h-[400px] md:w-[500px] md:h-[500px] bg-gray-200 relative organic-mask overflow-hidden shadow-2xl">
+                    <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover">
+                        <source
+                            src="https://assets.mixkit.co/videos/preview/mixkit-sun-shining-through-the-leaves-of-a-tree-41910-large.mp4"
+                            type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-natureza-dark mix-blend-multiply opacity-20"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="comunidade" class="relative py-24 min-h-screen bg-papel-escuro overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none z-0">
+            <svg id="root-svg" class="h-full w-full" viewBox="0 0 400 1200" preserveAspectRatio="none">
+                <path id="root-path"
+                    d="M200,0 C200,100 200,200 200,300 C200,450 100,500 100,600 C100,750 300,800 300,900 C300,1050 200,1100 200,1200"
+                    fill="none" stroke="#8D6E63" stroke-width="4" stroke-linecap="round" stroke-dasharray="2000"
+                    stroke-dashoffset="2000" />
+            </svg>
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-20 root-trigger">
+                <h2 class="text-4xl font-serif text-terra-dark mb-4">Como Nossas Raízes Crescem</h2>
+                <p class="text-terra-light">Abaixo da superfície, estamos todos conectados. Conheça os princípios que
+                    nutrem nossa comunidade.</p>
+            </div>
+            <div class="grid gap-32">
+                <div class="flex flex-col md:flex-row items-center gap-12 root-step">
+                    <div class="w-full md:w-1/2 flex justify-end">
+                        <div
+                            class="bg-white p-6 shadow-lg max-w-sm rotate-1 transform transition-transform hover:rotate-0 border-l-4 border-natureza-light">
+                            <h3 class="font-serif text-2xl text-natureza-dark mb-2">Ancestralidade</h3>
+                            <p class="text-gray-600">Respeitamos o tempo da terra e os saberes de quem veio antes. O
+                                cuidado é uma herança.</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2"></div>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-12 root-step">
+                    <div class="w-full md:w-1/2"></div>
+                    <div class="w-full md:w-1/2 flex justify-start">
+                        <div
+                            class="bg-white p-6 shadow-lg max-w-sm -rotate-2 transform transition-transform hover:rotate-0 border-l-4 border-sol-ocre">
+                            <h3 class="font-serif text-2xl text-sol-ocre mb-2">Partilha</h3>
+                            <p class="text-gray-600">Assim como as árvores trocam nutrientes pelas raízes,
+                                compartilhamos recursos e afeto.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-12 root-step">
+                    <div class="w-full md:w-1/2 flex justify-end">
+                        <div
+                            class="bg-white p-6 shadow-lg max-w-sm rotate-2 transform transition-transform hover:rotate-0 border-l-4 border-terra-dark">
+                            <h3 class="font-serif text-2xl text-terra-dark mb-2">Regeneração</h3>
+                            <p class="text-gray-600">Nossa missão não é apenas preservar, mas curar a terra e as
+                                relações humanas.</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projetos" class="bg-terra-dark py-12 overflow-hidden text-papel">
+        <div class="container mx-auto px-6 mb-8">
+            <h2 class="text-4xl font-serif text-sol-ocre">Nossa Colheita <span
+                    class="text-sm font-sans text-papel tracking-wider block mt-2 opacity-70">(Role para explorar o
+                    álbum)</span></h2>
+        </div>
+        <div id="horizontal-scroll-container" class="flex flex-nowrap h-[600px] items-center pl-10">
+            <div class="panel w-[400px] h-[500px] flex-shrink-0 mr-12 relative group">
+                <div class="bg-papel text-terra-dark p-4 h-full w-full scrapbook-card relative">
+                    <div class="tape absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 rotate-2 z-10"></div>
+                    <div class="h-3/5 overflow-hidden mb-4 border-2 border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1592419044706-39796d40f98c?q=80&w=800&auto=format&fit=crop"
+                            alt="Horta"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
+                    </div>
+                    <h3 class="font-serif text-2xl mb-2 text-natureza-dark">Hortas Urbanas</h3>
+                    <p class="text-sm font-sans mb-4">Transformando cimento em alimento. Um projeto de ocupação verde no
+                        centro da cidade.</p>
+                    <div class="absolute bottom-4 right-4 text-4xl text-natureza-light opacity-20">❋</div>
+                </div>
+            </div>
+            <div class="panel w-[400px] h-[500px] flex-shrink-0 mr-12 relative group">
+                <div class="bg-papel text-terra-dark p-4 h-full w-full scrapbook-card rotate-1 relative">
+                    <div class="tape absolute -top-3 right-10 w-24 h-8 -rotate-3 z-10"></div>
+                    <div class="h-3/5 overflow-hidden mb-4 border-2 border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1544642899-f0d6e5f6ed6f?q=80&w=800&auto=format&fit=crop"
+                            alt="Ensino"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
+                    </div>
+                    <h3 class="font-serif text-2xl mb-2 text-terra-dark">Escola da Terra</h3>
+                    <p class="text-sm font-sans mb-4">Ensinando as novas gerações a ler a natureza. Educação ambiental
+                        com afeto.</p>
+                </div>
+            </div>
+            <div class="panel w-[400px] h-[500px] flex-shrink-0 mr-12 relative group">
+                <div class="bg-papel text-terra-dark p-4 h-full w-full scrapbook-card -rotate-1 relative">
+                    <div class="tape absolute -top-3 left-10 w-24 h-8 rotate-1 z-10"></div>
+                    <div class="h-3/5 overflow-hidden mb-4 border-2 border-gray-200">
+                        <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?q=80&w=800&auto=format&fit=crop"
+                            alt="Mãos"
+                            class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">
+                    </div>
+                    <h3 class="font-serif text-2xl mb-2 text-sol-ocre">Rede de Apoio</h3>
+                    <p class="text-sm font-sans mb-4">Cesta solidária e feiras de troca. A economia baseada no cuidado
+                        mútuo.</p>
+                </div>
+            </div>
+            <div class="panel w-[400px] flex-shrink-0 flex items-center justify-center mr-20">
+                <div class="text-center">
+                    <h3 class="text-3xl font-serif text-papel mb-4">E muito mais...</h3>
+                    <button
+                        class="border border-sol-ocre text-sol-ocre px-8 py-3 rounded-full hover:bg-sol-ocre hover:text-terra-dark transition-all">Ver
+                        todos os projetos</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-papel">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-serif text-terra-dark mb-12">Colabore com o <span
+                    class="italic text-natureza-light">Coração</span></h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="group cursor-pointer">
+                    <div
+                        class="w-20 h-20 mx-auto bg-white rounded-full flex items-center justify-center shadow-md mb-4 group-hover:scale-125 transition-all duration-300 relative">
+                        <span class="text-3xl">💧</span>
+                        <div
+                            class="absolute inset-0 border-2 border-natureza-light rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500">
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-terra-dark">Água Viva</h4>
+                </div>
+                <div class="group cursor-pointer">
+                    <div
+                        class="w-20 h-20 mx-auto bg-white rounded-full flex items-center justify-center shadow-md mb-4 group-hover:scale-125 transition-all duration-300 relative">
+                        <span class="text-3xl">🌱</span>
+                        <div
+                            class="absolute inset-0 border-2 border-natureza-dark rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500">
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-terra-dark">Semear</h4>
+                </div>
+                <div class="group cursor-pointer">
+                    <div
+                        class="w-20 h-20 mx-auto bg-white rounded-full flex items-center justify-center shadow-md mb-4 group-hover:scale-125 transition-all duration-300 relative">
+                        <span class="text-3xl">🐝</span>
+                        <div
+                            class="absolute inset-0 border-2 border-sol-ocre rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500">
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-terra-dark">Polinizar</h4>
+                </div>
+                <div class="group cursor-pointer">
+                    <div
+                        class="w-20 h-20 mx-auto bg-white rounded-full flex items-center justify-center shadow-md mb-4 group-hover:scale-125 transition-all duration-300 relative">
+                        <span class="text-3xl">🤝</span>
+                        <div
+                            class="absolute inset-0 border-2 border-terra-light rounded-full opacity-0 group-hover:opacity-100 group-hover:scale-150 transition-all duration-500">
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-terra-dark">Mãos Dadas</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-stone-900 text-stone-400 py-16">
+        <div class="container mx-auto px-6 grid md:grid-cols-3 gap-12 border-t border-stone-800 pt-12">
+            <div>
+                <h3 class="text-2xl font-serif text-papel mb-4">Rizoma do Afeto</h3>
+                <p class="text-sm leading-relaxed mb-4">Design digital de baixo impacto.</p>
+            </div>
+            <div>
+                <h4 class="text-papel font-bold mb-4">Menu Rápido</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-natureza-light">Transparência</a></li>
+                    <li><a href="#" class="hover:text-natureza-light">Manifesto</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-papel font-bold mb-4">Acessibilidade</h4>
+                <p class="text-sm mb-4">Diretrizes WCAG 2.1.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // =========================================
+        // LÓGICA DA INTRODUÇÃO
+        // =========================================
+        const introOverlay = document.getElementById('intro-overlay');
+        const navbar = document.getElementById('navbar');
+        const body = document.body;
+        let introDismissed = false;
+
+        function dismissIntro() {
+            if (introDismissed) return;
+            introDismissed = true;
+
+            const tl = gsap.timeline({
+                onComplete: () => {
+                    introOverlay.style.display = 'none';
+                    body.style.overflow = 'auto';
+                    playHeroAnimations();
+                }
+            });
+
+            tl.to(introOverlay, {
+                opacity: 0,
+                duration: 1.5,
+                ease: "power2.inOut"
+            })
+                // Fade in da Navbar
+                .to(navbar, {
+                    opacity: 1,
+                    duration: 0.5,
+                    ease: "power2.out"
+                }, "-=0.5");
+        }
+
+        window.addEventListener('wheel', dismissIntro, { once: true });
+        window.addEventListener('touchstart', dismissIntro, { once: true });
+        introOverlay.addEventListener('click', dismissIntro);
+
+        // =========================================
+        // ANIMAÇÕES ORIGINAIS
+        // =========================================
+        function playHeroAnimations() {
+            gsap.set(".hero-text, .hero-video", { opacity: 1 });
+
+            gsap.from(".hero-text > *", {
+                y: 50,
+                opacity: 0,
+                duration: 1.5,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            gsap.from(".hero-video", {
+                scale: 0.8,
+                opacity: 0,
+                duration: 1.5,
+                delay: 0.5,
+                ease: "elastic.out(1, 0.75)"
+            });
+        }
+
+        // Raiz
+        gsap.to("#root-path", {
+            strokeDashoffset: 0,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#comunidade",
+                start: "top center",
+                end: "bottom center",
+                scrub: 1
+            }
+        });
+
+        gsap.utils.toArray('.root-step').forEach(step => {
+            gsap.from(step, {
+                y: 50,
+                opacity: 0,
+                scrollTrigger: {
+                    trigger: step,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse"
+                }
+            });
+        });
+
+        // Horizontal Scroll
+        let sections = gsap.utils.toArray(".panel");
+        gsap.to(sections, {
+            xPercent: -100 * (sections.length - 1),
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#projetos",
+                pin: true,
+                scrub: 1,
+                snap: 1 / (sections.length - 1),
+                end: () => "+=" + document.querySelector("#horizontal-scroll-container").offsetWidth
+            }
+        });
+
+        // Botões Magnéticos
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(btn, { x: x * 0.2, y: y * 0.2, duration: 0.3, ease: "power2.out" });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: "elastic.out(1, 0.5)" });
+            });
+        });
+    </script>
+</body>
+
+</html>
